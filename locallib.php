@@ -95,14 +95,16 @@ function local_recompletion_set_form_data($mformdata) {
         $fqn::set_form_data($mformdata);
     }
 
-    $data = (array) $mformdata;
-    if (key_exists('recompletionemailbody', $data)) {
-        $recompletionemailbody = $data['recompletionemailbody'];
-        $data['recompletionemailbody_format'] = $recompletionemailbody['format'];
-        $data['recompletionemailbody'] = $recompletionemailbody['text'];
-    }
+$data = (array) $mformdata;
 
-    return (object) $data;
+if (array_key_exists('recompletionemailbody', $data)) {
+    $recompletionemailbody = $data['recompletionemailbody'];
+    
+    $data['recompletionemailbody_format'] = $recompletionemailbody['format'] ?? FORMAT_HTML;
+    $data['recompletionemailbody'] = $recompletionemailbody['text'] ?? '';
+}
+return (object) $data;
+
 }
 
 /**
